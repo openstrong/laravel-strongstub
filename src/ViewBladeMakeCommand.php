@@ -13,14 +13,14 @@ class ViewBladeMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'make:view-blade';
+    protected $name = 'strongstub:view';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new blade view.';
+    protected $description = '创建 laravel-strongadmin 视图文件';
 
     /**
      * The type of class being generated.
@@ -142,8 +142,7 @@ class ViewBladeMakeCommand extends GeneratorCommand
             ['radio', null, InputOption::VALUE_OPTIONAL, 'Generate radio input.'],
             ['checkbox', null, InputOption::VALUE_OPTIONAL, 'Generate checkbox input.'],
             ['select', null, InputOption::VALUE_OPTIONAL, 'Generate select input.'],
-            ['cut', null, InputOption::VALUE_NONE, '缩减`字段注释`(自动删除空格/冒号后面的字符).'],
-            ['apiPre', null, InputOption::VALUE_OPTIONAL, 'API url 前缀'],
+            ['cut', null, InputOption::VALUE_NONE, '缩减`字段注释`(自动删除 空格/冒号 后面的字符).'],
         ];
     }
     
@@ -164,9 +163,9 @@ class ViewBladeMakeCommand extends GeneratorCommand
         $str_show = $str_input = $str = '';
         foreach ($columns as $key=>$column) {
             if($primaryKeyName === $column->COLUMN_NAME){
-                continue;
+                //continue;
             }
-            if(($key+1)%2 == 0)
+            if(($key)%2 == 0)
             {
             $str_show .= '
         <tr>';
@@ -174,7 +173,7 @@ class ViewBladeMakeCommand extends GeneratorCommand
             $str_show .='
             <td><strong>{{$model->getAttributeLabel(\''.$column->COLUMN_NAME.'\')}}</strong></td>
             <td>{{$model->'.$column->COLUMN_NAME.'}}</td>';
-            if(($key+1)%2 > 0)
+            if(($key)%2 > 0)
             {
         $str_show .='
         </tr>';
@@ -251,6 +250,12 @@ class ViewBladeMakeCommand extends GeneratorCommand
           <el-input type=\"text\" v-model{$modifier}=\"inputForm.{$column->COLUMN_NAME}\"></el-input>
         </el-form-item>";
         }
+        
+        if(count($columns)%2 > 0){
+                $str_show .='
+        </tr>';
+                }
+                
         // ------------------------------
         
         return array_merge($replace, [

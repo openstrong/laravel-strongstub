@@ -15,14 +15,14 @@ class CurdMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'make:curd';
+    protected $name = 'strongstub:curd';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create CURD logic.';
+    protected $description = '创建 CURD Controller 逻辑';
 
     /**
      * The type of class being generated.
@@ -87,8 +87,7 @@ class CurdMakeCommand extends GeneratorCommand
         $this->info($str);
         $this->info(json_encode($str_json));
 
-
-        if ($this->option('blade'))
+        if ($this->option('view'))
         {
             $modelClass = $this->parseModel($this->option('model'));
             $this->info("\n");
@@ -97,7 +96,7 @@ class CurdMakeCommand extends GeneratorCommand
             {
                 $params = array_merge($params, ['--force' => '1']);
             }
-            $this->call('make:view-blade', $params);
+            $this->call('strongstub:view', $params);
         }
     }
 
@@ -108,21 +107,15 @@ class CurdMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        if ($this->option('parent'))
+        if ($this->option('model'))
         {
-            return __DIR__ . '/stubs/controller.nested.stub';
-        } elseif ($this->option('model'))
-        {
-            if ($this->option('blade'))
+            if ($this->option('view'))
             {
                 return __DIR__ . '/stubs/controller.model.blade.stub';
             } else
             {
                 return __DIR__ . '/stubs/controller.model.stub';
             }
-        } elseif ($this->option('resource'))
-        {
-            return __DIR__ . '/stubs/controller.stub';
         }
 
         return __DIR__ . '/stubs/controller.plain.stub';
@@ -154,11 +147,6 @@ class CurdMakeCommand extends GeneratorCommand
 
         $replace = [];
 
-        if ($this->option('parent'))
-        {
-            $replace = $this->buildParentReplacements();
-        }
-
         if ($this->option('model'))
         {
             $replace = $this->buildModelReplacements($replace);
@@ -171,34 +159,6 @@ class CurdMakeCommand extends GeneratorCommand
         return str_replace(
                 array_keys($replace), array_values($replace), parent::buildClass($name)
         );
-    }
-
-    /**
-     * Build the replacements for a parent controller.
-     *
-     * @return array
-     */
-    protected function buildParentReplacements()
-    {
-        $parentModelClass = $this->parseModel($this->option('parent'));
-        if (!class_exists($parentModelClass))
-        {
-            if ($this->confirm("A {$parentModelClass} model does not exist. Do you want to generate it?", true))
-            {
-                $params = ['name' => $parentModelClass];
-                if ($this->option('force'))
-                {
-                    $params = array_merge($params, ['--force' => '1']);
-                }
-                $this->call('make:model', $params);
-            }
-        }
-
-        return [
-            'ParentDummyFullModelClass' => $parentModelClass,
-            'ParentDummyModelClass' => class_basename($parentModelClass),
-            'ParentDummyModelVariable' => lcfirst(class_basename($parentModelClass)),
-        ];
     }
 
     /**
@@ -220,7 +180,7 @@ class CurdMakeCommand extends GeneratorCommand
                 {
                     $params = array_merge($params, ['--force' => '1']);
                 }
-                $this->call('make:model-rule', $params);
+                $this->call('strongstub:model', $params);
                 $path = CommonClass::getModelPath($modelClass);
                 require_once base_path() . '/app/' . $path . '.php';
             } else
@@ -267,10 +227,8 @@ class CurdMakeCommand extends GeneratorCommand
     {
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
-            ['resource', 'r', InputOption::VALUE_NONE, 'Generate a resource controller class.'],
-            ['parent', 'p', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists.'],
-            ['blade', null, InputOption::VALUE_NONE, 'Create controller for view blade'],
+            ['view', null, InputOption::VALUE_NONE, 'Create controller for laravel-strongadmin view.'],
         ];
     }
 
@@ -349,7 +307,7 @@ class CurdMakeCommand extends GeneratorCommand
                     $uniqueRule .= "
             '" . $field . "' => [Rule::unique('" . $table . "')";
 
-                    $fields_except = $fields->reject(function ($value, $key) use($field) {
+                    $fields_except = $fields->reject(function ($value, $key) use ($field) {
                         return $value === $field;
                     });
                     $where_str = '';
@@ -365,7 +323,7 @@ class CurdMakeCommand extends GeneratorCommand
                     $uniqueRuleUpdate .= "
             '" . $field . "' => [Rule::unique('" . $table . "')";
 
-                    $fields_except = $fields->reject(function ($value, $key) use($field) {
+                    $fields_except = $fields->reject(function ($value, $key) use ($field) {
                         return $value === $field;
                     });
                     $where_str = '';

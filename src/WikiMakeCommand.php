@@ -16,14 +16,14 @@ class WikiMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'make:wiki';
+    protected $name = 'strongstub:wiki';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create api wiki.';
+    protected $description = '创建 api 接口 markdown 文档';
 
     /**
      * The type of class being generated.

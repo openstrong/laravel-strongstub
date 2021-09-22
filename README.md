@@ -10,14 +10,14 @@ composer require --prefer-dist openstrong/laravel-strongstub
 使用示例
 -------
 
-创建 Model, 此模型会自动创建验证规则
+创建 Eloquent Model 模型, 创建成功的 Model 包含验证规则
 ```
-php artisan strongstub:model Models/User --table=users --cut
+php artisan strongstub:model Models/User --table=users --cut --force
 ```
 
 创建 CURD Controller 逻辑
 ```
-php artisan strongstub:curd CurdController --model=App\\Models\\User --blade --force
+php artisan strongstub:curd CurdController --model=App\\Models\\User --view --force
 ```
 
 创建 api 接口文档

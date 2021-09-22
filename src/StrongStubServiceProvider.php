@@ -15,7 +15,6 @@ class StrongStubServiceProvider extends ServiceProvider
         $this->commands([
             CurdMakeCommand::class,
             ModelMakeCommand::class,
-            ViewVueMakeCommand::class,
             WikiMakeCommand::class,
             ViewBladeMakeCommand::class,
         ]);
