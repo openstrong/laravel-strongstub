@@ -57,7 +57,8 @@ class DummyClass extends Model
         {
             if ($attribute === null)
             {
-                unset($attributes[$key]);
+                //unset($attributes[$key]);
+                $attributes[$key] = '';
             }
         }
         parent::fill($attributes);
