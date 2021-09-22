@@ -22,7 +22,7 @@ class CurdMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $description = '创建 CURD Controller 逻辑';
+    protected $description = '创建一个 CURD（增删改查）controller class';
 
     /**
      * The type of class being generated.

@@ -28,18 +28,4 @@ class StrongStubServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function provides()
-    {
-        return [
-            CurdMakeCommand::class,
-            ModelMakeCommand::class,
-            ViewVueMakeCommand::class,
-            WikiMakeCommand::class,
-            ViewBladeMakeCommand::class,
-        ];
-    }
-
 }
