@@ -2,12 +2,13 @@
     "name": "openstrong/laravel-strongstub",
     "description": "类似于yii2 的Gii工具,可以创建CURD逻辑及验证规则",
     "type": "laravel-extension",
-    "keywords": ["laravel", "crud", "gii", "rules"],
+    "homepage": "http://strongstub.strongshop.cn",
+    "keywords": ["laravel", "curd", "rules"],
     "license": "MIT", 
     "authors": [
         {
-            "name": "kai",
-            "email": "kaykay012@sina.cn"
+            "name": "Karen",
+            "email": "openstrong@foxmail.com"
         }
     ],
     "require": {
