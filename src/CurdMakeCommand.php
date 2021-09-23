@@ -233,7 +233,7 @@ class CurdMakeCommand extends GeneratorCommand
     {
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
-            ['path', null, InputOption::VALUE_OPTIONAL, '路由 URL 路径前缀。'],
+            ['path', 'p', InputOption::VALUE_OPTIONAL, '路由 URL 路径前缀。'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists.'],
             ['view', null, InputOption::VALUE_NONE, 'Create controller for laravel-strongadmin view.'],
         ];
