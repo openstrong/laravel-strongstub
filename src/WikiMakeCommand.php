@@ -146,10 +146,19 @@ class WikiMakeCommand extends GeneratorCommand
         $md_show = $this->buildShowClass('show');
         
         $this->files->put($path . "/create.wiki", $md_create);
+        $this->info($path . "/create.wiki");
+        
         $this->files->put($path . '/update.wiki', $md_update);
+        $this->info($path . "/update.wiki");
+        
         $this->files->put($path . '/destroy.wiki', $md_destroy);
+        $this->info($path . "/destroy.wiki");
+        
         $this->files->put($path . '/index.wiki', $md_index);
+        $this->info($path . "/index.wiki");
+        
         $this->files->put($path . '/show.wiki', $md_show);
+        $this->info($path . "/show.wiki");
         
         if(!$this->option('doc')){
             return true;
@@ -484,7 +493,7 @@ class WikiMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
+            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate wiki for the given model.'],
             ['resource', 'r', InputOption::VALUE_NONE, 'Generate a resource controller class.'],
             ['parent', 'p', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists.'],

@@ -45,7 +45,13 @@ class CurdMakeCommand extends GeneratorCommand
         }
         $input_name = $this->getNameInput();
         $name = $this->qualifyClass($input_name);
-        $url_path = CommonClass::getRoutePathName($name);
+        if ($this->option('path'))
+        {
+            $url_path = trim($this->option('path'), '/');
+        } else
+        {
+            $url_path = CommonClass::getRoutePathName($name);
+        }
         $controller_name = str_replace('/', '\\', $input_name);
 
         $this->url_path_index = "{$url_path}/index";
@@ -227,6 +233,7 @@ class CurdMakeCommand extends GeneratorCommand
     {
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
+            ['path', null, InputOption::VALUE_OPTIONAL, '路由 URL 路径前缀。'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists.'],
             ['view', null, InputOption::VALUE_NONE, 'Create controller for laravel-strongadmin view.'],
         ];
