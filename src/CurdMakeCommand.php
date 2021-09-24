@@ -66,12 +66,12 @@ class CurdMakeCommand extends GeneratorCommand
         $update = "Route::any('{$this->url_path_update}', '{$controller_name}@update');";
         $destroy = "Route::any('{$this->url_path_destroy}', '{$controller_name}@destroy');";
 
-        $route_admin = base_path('routes/admin.php');
-        if (file_exists($route_admin))
-        {
-            $route_str = "\n{$index}\n{$show}\n{$create}\n{$update}\n{$destroy}\n";
-            file_put_contents($route_admin, $route_str, FILE_APPEND);
-        }
+//        $route_admin = base_path('routes/admin.php');
+//        if (file_exists($route_admin))
+//        {
+//            $route_str = "\n{$index}\n{$show}\n{$create}\n{$update}\n{$destroy}\n";
+//            file_put_contents($route_admin, $route_str, FILE_APPEND);
+//        }
 
         $this->info('');
         $this->info($index);
@@ -194,10 +194,27 @@ class CurdMakeCommand extends GeneratorCommand
                 exit(0);
             }
         }
+
+        $extends_controller = trim($this->option('extends'));
+        if ($this->option('view'))
+        {
+            $extends_controller = 'OpenStrong\StrongAdmin\Http\Controllers\BaseController as Controller';
+        } else
+        {
+            if (!$extends_controller)
+            {
+                $extends_controller = 'App\Http\Controllers\Controller';
+            } else
+            {
+                $extends_controller .= ' as Controller';
+            }
+        }
+
         return array_merge($replace, [
             'DummyFullModelClass' => $modelClass,
             'DummyModelClass' => class_basename($modelClass),
             'DummyModelVariable' => lcfirst(class_basename($modelClass)),
+            'DummyExtendsController' => $extends_controller,
         ]);
     }
 
@@ -233,6 +250,7 @@ class CurdMakeCommand extends GeneratorCommand
     {
         return [
             ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
+            ['extends', 'e', InputOption::VALUE_OPTIONAL, '要继承的 controller'],
             ['path', 'p', InputOption::VALUE_OPTIONAL, '路由 URL 路径前缀。'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists.'],
             ['view', null, InputOption::VALUE_NONE, 'Create controller for laravel-strongadmin view.'],

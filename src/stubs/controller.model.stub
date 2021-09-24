@@ -3,10 +3,10 @@
 namespace DummyNamespace;
 
 use Illuminate\Http\Request;
-use DummyRootNamespaceHttp\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Carbon;
+use DummyExtendsController;
 use DummyFullModelClass;
 
 class DummyClass extends Controller
