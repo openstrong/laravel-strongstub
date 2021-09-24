@@ -1,5 +1,5 @@
-# laravel-strongstub
-在十秒内创建完成 CURD 增删改查的逻辑。
+<h1 align="center">Larevel-StrongStub</h1>
+<h3 align="center">在十秒内创建完成 CURD 增删改查的逻辑。</h3>
 
 安装
 -------
