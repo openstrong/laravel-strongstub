@@ -264,8 +264,12 @@ class CurdMakeCommand extends GeneratorCommand
         $obj = new $modelClass();
         $table = $obj->getTable();
         $primaryKeyName = $obj->getKeyName();
-        $this->columns = $columns = CommonClass::getColumns($table);
-
+        $this->columns = $columns = CommonClass::getColumns($table, $obj->getConnectionName());
+        if (empty($this->columns))
+        {
+            $this->error("The table `{$table}` does not exits.");
+            exit(0);
+        }
         // Search Condition
         $createDefaultValue = $uniqueRuleUpdate = $uniqueRule = $searchCondition = '';
         foreach ($columns as $key => $column)
@@ -322,8 +326,8 @@ class CurdMakeCommand extends GeneratorCommand
             //多字段唯一索引
             if ($column->COLUMN_KEY === 'MUL')
             {
-                $constraint_name = CommonClass::getColumnsIndex($table, $column->COLUMN_NAME);
-                $uniques = CommonClass::getIndexColumns($table, $constraint_name);
+                $constraint_name = CommonClass::getColumnsIndex($table, $column->COLUMN_NAME, $obj->getConnectionName());
+                $uniques = CommonClass::getIndexColumns($table, $constraint_name, $obj->getConnectionName());
                 $fields = collect($uniques)->pluck('COLUMN_NAME');
 
                 foreach ($fields as $field)

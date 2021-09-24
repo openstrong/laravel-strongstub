@@ -46,11 +46,11 @@ class ModelMakeCommand extends GeneratorCommand
         }
         
         do{
-            $exists = CommonClass::existsTable($table);
+            $exists = CommonClass::existsTable($table, $this->option('connection'));
             if (!$exists) {
-                $tableAsk = $this->ask("The table `{$table}` does not exist. Enter table name to regenerate or continue generate it.", $table);                
+                $tableAsk = $this->ask("The table `{$table}` does not exist. Enter table name to regenerateit.(Do not fill in the table prefix)", $table);                
                 if($tableAsk === $table){
-                    break;
+                    //break;
                 }else{
                     $table = $tableAsk;
                 }
@@ -60,7 +60,7 @@ class ModelMakeCommand extends GeneratorCommand
         }while(isset($tableAsk) && $tableAsk !== false);
         
         $replace['DummyTableName'] = $table;
-        $replace['DummyTableComments'] = CommonClass::getTableInfo($table);
+        $replace['DummyTableComments'] = CommonClass::getTableInfo($table, $this->option('connection'));
         $replace = $this->buildRulesReplacements($replace, $table);
         $replace = $this->buildAttributesReplacements($replace, $table);
         
@@ -180,7 +180,7 @@ class ModelMakeCommand extends GeneratorCommand
         return [
             ['all', 'a', InputOption::VALUE_NONE, 'Generate a migration, factory, and resource controller for the model'],
 
-            ['controller', 'c', InputOption::VALUE_NONE, 'Create a new controller for the model'],
+            ['controller', 'co', InputOption::VALUE_NONE, 'Create a new controller for the model'],
 
             ['factory', 'f', InputOption::VALUE_NONE, 'Create a new factory for the model'],
 
@@ -194,14 +194,16 @@ class ModelMakeCommand extends GeneratorCommand
             
             ['table', 't', InputOption::VALUE_OPTIONAL, 'Generate the model with table name.'],
             
+            ['connection', 'c', InputOption::VALUE_OPTIONAL, '数据库连接名称.'],
+            
             ['cut', null, InputOption::VALUE_NONE, '缩减`字段注释`(自动删除空格/冒号后面的字符).'],
         ];
     }
     
     protected function buildRulesReplacements(array $replace, $table)
     {
-        $columns = CommonClass::getColumns($table);
-        $primaryKeyName = CommonClass::getKeyName($table);
+        $columns = CommonClass::getColumns($table, $this->option('connection'));
+        $primaryKeyName = CommonClass::getKeyName($table, $this->option('connection'));
         
         // rules -------------------------------------
         $str = '';
@@ -225,15 +227,24 @@ class ModelMakeCommand extends GeneratorCommand
             $str .= "],";
         }
         // ------------------------------
-        
+        if ($this->option('connection'))
+        {
+            $connection = $this->option('connection');
+            $str_connection = '
+    protected $connection = \''.$connection.'\';';
+        } else
+        {
+            $str_connection = '';
+        }
         return array_merge($replace, [
             'DummyRules' => $str,
+            'DummyConnection' => $str_connection,
         ]);
     }
     
     protected function buildAttributesReplacements(array $replace, $table)
     {
-        $columns = CommonClass::getColumns($table);
+        $columns = CommonClass::getColumns($table, $this->option('connection'));
         
         // attributes ----------------------------------
         $str = "";

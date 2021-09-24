@@ -12,16 +12,17 @@ composer require --prefer-dist openstrong/laravel-strongstub
 
 创建一个包含验证规则的 Eloquent Model 模型
 ```
-php artisan strongstub:model Models/StrongadminUser -t strongadmin_user
+php artisan strongstub:model Models/StrongadminUser -t strongadmin_user -c mysql
 
 参数说明：
 -t          表名称
+-c          数据库连接名称，默认为 mysql，（config/database.php）
 --force     是否强制覆盖
 ```
 
 创建一个 CURD（增删改查）controller class
 ```
-php artisan strongstub:curd Strongadmin/TesetAdminUserController -m App\\Models\\StrongadminUser -e App\\Http\\Controllers\\Controller
+php artisan strongstub:curd Strongadmin/TestAdminUserController -m App\\Models\\StrongadminUser -e App\\Http\\Controllers\\Controller
 
 参数说明：
 -m          Eloquent Model 模型
@@ -32,7 +33,7 @@ php artisan strongstub:curd Strongadmin/TesetAdminUserController -m App\\Models\
 
 创建 api 接口 markdown 文档
 ```
-php artisan strongstub:wiki Strongadmin/TesetAdminUserController -m App\\Models\\StrongadminUser --force
+php artisan strongstub:wiki Strongadmin/TestAdminUserController -m App\\Models\\StrongadminUser --force
 
 参数说明：
 -m          Eloquent Model 模型
@@ -41,7 +42,7 @@ php artisan strongstub:wiki Strongadmin/TesetAdminUserController -m App\\Models\
 
 创建 laravel-strongadmin 视图文件，这里推荐 使用 `composer require openstrong/laravel-strongadmin` 扩展应用：在1分钟内构建一个功能齐全的管理后台。
 ```
-php artisan strongstub:view strongadmin/TesetAdminUser -t strongadmin_user
+php artisan strongstub:view strongadmin/testAdminUser -t strongadmin_user
 
 参数说明：
 -t          表名称
