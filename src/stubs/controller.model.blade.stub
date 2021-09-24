@@ -50,11 +50,7 @@ class DummyClass extends Controller
             return ['code' => 3001, 'message' => $validator->errors()->first(), 'data' => $validator->errors()];
         }
         $model = DummyModelClass::find($request->id);
-        if($model){
-            return ['code' => 200, 'message' => __('admin.Success'), 'data' => $model];
-        }else{
-            return ['code' => 5001, 'message' => __('admin.Server internal error')];
-        }
+        return $this->view('DummyViewBladeFolder.show', ['model' => $model]);
     }
     
     /**

@@ -11,12 +11,12 @@
 @section('content')
 <div class="st-h15"></div>
 <table class="layui-table" lay-size="sm">
-    <colgroup>
+<!--    <colgroup>
         <col width="150"><col>
         <col><col>
         <col width="150"><col>
         <col><col>
-    </colgroup>
+    </colgroup>-->
     <thead>
         <tr>
             <th colspan="4" style="text-align: center;background: #eee;">基本信息</th>

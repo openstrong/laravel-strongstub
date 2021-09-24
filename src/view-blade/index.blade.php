@@ -32,6 +32,7 @@
 </script>
 <script type="text/html" id="ST-OP-BUTTON">
     @verbatim
+    <a class="layui-btn layui-btn-xs" onclick="Util.createWindow('/DummyPathNameLcfirstTitleCase/show?id={{d.id}}', this.innerText);">详情</a>
     <a class="layui-btn layui-btn-xs" onclick="Util.createFormWindow('/DummyPathNameLcfirstTitleCase/update?id={{d.id}}', this.innerText);">更新</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="Util.destroy('/DummyPathNameLcfirstTitleCase/destroy?id={{d.id}}');">删除</a>
     @endverbatim
@@ -51,7 +52,7 @@
     var cols = [
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'id', title: 'id', width: 60, fixed: 'left', unresize: true, totalRowText: '合计', sort: true}DummyList
-                , {fixed: 'right', title: '操作', toolbar: '#ST-OP-BUTTON', width: 150}
+                , {fixed: 'right', title: '操作', toolbar: '#ST-OP-BUTTON', width: 200}
             ];
     var tableConfig = {
         cols: [cols]

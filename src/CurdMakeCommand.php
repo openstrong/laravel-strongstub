@@ -263,13 +263,10 @@ class CurdMakeCommand extends GeneratorCommand
 
         $obj = new $modelClass();
         $table = $obj->getTable();
+        $table_db = $obj->getConnectionName() ? "{$obj->getConnectionName()}.{$table}" : $table;
         $primaryKeyName = $obj->getKeyName();
         $this->columns = $columns = CommonClass::getColumns($table, $obj->getConnectionName());
-        if (empty($this->columns))
-        {
-            $this->error("The table `{$table}` does not exits.");
-            exit(0);
-        }
+
         // Search Condition
         $createDefaultValue = $uniqueRuleUpdate = $uniqueRule = $searchCondition = '';
         foreach ($columns as $key => $column)
@@ -318,10 +315,10 @@ class CurdMakeCommand extends GeneratorCommand
             if ($column->COLUMN_KEY === 'UNI')
             {
                 $uniqueRule .= "
-            '{$column->COLUMN_NAME}' => ['unique:{$table}'],";
+            '{$column->COLUMN_NAME}' => ['unique:{$table_db}'],";
 
                 $uniqueRuleUpdate .= "
-            '" . $column->COLUMN_NAME . "' => [Rule::unique('" . $table . "')->ignore(" . '$request->id' . ")],";
+            '" . $column->COLUMN_NAME . "' => [Rule::unique('" . $table_db . "')->ignore(" . '$request->id' . ")],";
             }
             //多字段唯一索引
             if ($column->COLUMN_KEY === 'MUL')
@@ -334,9 +331,9 @@ class CurdMakeCommand extends GeneratorCommand
                 {
 
                     $uniqueRule .= "
-            '" . $field . "' => [Rule::unique('" . $table . "')";
+            '" . $field . "' => [Rule::unique('" . $table_db . "')";
 
-                    $fields_except = $fields->reject(function ($value, $key) use ($field) {
+                    $fields_except = $fields->reject(function ($value, $key) use($field) {
                         return $value === $field;
                     });
                     $where_str = '';
@@ -350,9 +347,9 @@ class CurdMakeCommand extends GeneratorCommand
                     //===========================
 
                     $uniqueRuleUpdate .= "
-            '" . $field . "' => [Rule::unique('" . $table . "')";
+            '" . $field . "' => [Rule::unique('" . $table_db . "')";
 
-                    $fields_except = $fields->reject(function ($value, $key) use ($field) {
+                    $fields_except = $fields->reject(function ($value, $key) use($field) {
                         return $value === $field;
                     });
                     $where_str = '';
@@ -367,7 +364,7 @@ class CurdMakeCommand extends GeneratorCommand
         }
 
         return array_merge($replace, [
-            'DummyTableName' => $table,
+            'DummyTableName' => "$table_db",
             'DummySearchCondition' => ltrim($searchCondition),
             'DummyPrimaryKeyName' => $primaryKeyName,
             'DummyUniqueRule' => $uniqueRule,
