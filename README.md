@@ -40,7 +40,7 @@ php artisan strongstub:wiki Strongadmin/TestAdminUserController -m App\\Models\\
 --force     是否强制覆盖
 ```
 
-创建 laravel-strongadmin 视图文件，这里推荐 使用 `composer require openstrong/laravel-strongadmin` 扩展应用：在1分钟内构建一个功能齐全的管理后台。
+创建 laravel-strongadmin 视图文件，这里推荐 使用 https://gitee.com/openstrong/laravel-strongstub 扩展应用：在1分钟内构建一个功能齐全的管理后台。
 ```
 php artisan strongstub:view strongadmin/testAdminUser -t strongadmin_user
 
