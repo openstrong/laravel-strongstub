@@ -7,7 +7,7 @@
 ```
 composer require --prefer-dist openstrong/laravel-strongstub
 ```
-使用示例
+使用示例 
 -------
 
 创建一个包含验证规则的 Eloquent Model 模型
