@@ -48,3 +48,8 @@ php artisan strongstub:view strongadmin/testAdminUser -t strongadmin_user
 -t          表名称
 --force     是否强制覆盖
 ```
+
+# 使用此扩展包的开源项目
+StrongShop 开源跨境商城 http://www.strongshop.cn
+
+QQ群：557655631
