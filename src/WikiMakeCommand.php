@@ -45,6 +45,7 @@ class WikiMakeCommand extends GeneratorCommand
     public function handle()
     {
         if (! $this->option('force')) {
+            $this->warn('请携带参数 --force');
             return;
         }
         $input_name = $this->getNameInput();
@@ -129,7 +130,10 @@ class WikiMakeCommand extends GeneratorCommand
         $url_path = CommonClass::getRoutePathName($name);
         
         $modelClass = $this->parseModel($this->option('model'));
-        
+        if (!class_exists($modelClass)) {
+            $this->error(" Model [{$modelClass}] does not exist. ");
+            exit(0);
+        }
         $obj = new $modelClass();
         $table = $obj->getTable();
         $primaryKeyName = $obj->getKeyName();
@@ -452,7 +456,6 @@ class WikiMakeCommand extends GeneratorCommand
     protected function buildModelReplacements(array $replace)
     {
         $modelClass = $this->parseModel($this->option('model'));
-
         if (!class_exists($modelClass)) {
             $this->error('model does not exist.');
             exit(0);
@@ -479,7 +482,7 @@ class WikiMakeCommand extends GeneratorCommand
         $model = trim(str_replace('/', '\\', $model), '\\');
 
         if (!Str::startsWith($model, $rootNamespace = $this->laravel->getNamespace())) {
-            $model = $rootNamespace . $model;
+//            $model = $rootNamespace . $model;
         }
 
         return $model;
