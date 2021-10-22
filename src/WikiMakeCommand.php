@@ -149,20 +149,20 @@ class WikiMakeCommand extends GeneratorCommand
         $md_index = $this->buildIndexClass('index');
         $md_show = $this->buildShowClass('show');
         
-        $this->files->put($path . "/create.wiki", $md_create);
-        $this->info($path . "/create.wiki");
+        $this->files->put($path . "/create.md", $md_create);
+        $this->info($path . "/create.md");
         
-        $this->files->put($path . '/update.wiki', $md_update);
-        $this->info($path . "/update.wiki");
+        $this->files->put($path . '/update.md', $md_update);
+        $this->info($path . "/update.md");
         
-        $this->files->put($path . '/destroy.wiki', $md_destroy);
-        $this->info($path . "/destroy.wiki");
+        $this->files->put($path . '/destroy.md', $md_destroy);
+        $this->info($path . "/destroy.md");
         
-        $this->files->put($path . '/index.wiki', $md_index);
-        $this->info($path . "/index.wiki");
+        $this->files->put($path . '/index.md', $md_index);
+        $this->info($path . "/index.md");
         
-        $this->files->put($path . '/show.wiki', $md_show);
-        $this->info($path . "/show.wiki");
+        $this->files->put($path . '/show.md', $md_show);
+        $this->info($path . "/show.md");
         
         if(!$this->option('doc')){
             return true;
