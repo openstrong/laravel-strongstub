@@ -1,7 +1,7 @@
 #### 接口版本：
 
 |版本号|制定人|修订日期|说明|
-|:----    |:---|-----   ||
+|:----|:----|:----   |:----|
 |1.0 |Karen  |DummyCreateWikiDate |建立文档|
 
 #### 请求URL:
@@ -16,7 +16,8 @@
 
 |参数名|是否必须|类型|说明|
 |:----    |:---|:----- |-----   |
-|Content-Type |是  |string |请求类型： application/json   |
+|Content-Type |是  |string |application/json   |
+|Accept |是  |string |application/json   |
 
 #### 搜索参数:
 
