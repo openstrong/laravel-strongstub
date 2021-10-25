@@ -50,6 +50,6 @@ php artisan strongstub:view strongadmin/testAdminUser -t strongadmin_user
 ```
 
 # 使用此扩展包的开源项目
-StrongShop 开源跨境商城 http://www.strongshop.cn
+StrongShop 开源跨境商城 https://gitee.com/openstrong/strongshop
 
 QQ群：557655631
